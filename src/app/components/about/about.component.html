@@ -1,0 +1,105 @@
+<section class="min-h-[80vh] py-20 px-6 bg-white" id="about">
+  <div
+    class="grid items-center grid-cols-1 gap-12 mx-auto max-w-7xl md:grid-cols-2"
+  >
+    <!--  Left: About Me Text and Download Resume Button -->
+    <div
+      class="flex flex-col items-start justify-center space-y-6 animate-slide-in-left"
+    >
+      <h2 class="text-3xl font-bold text-gray-800 md:text-4xl">
+        About <span class="text-indigo-600">Me</span>
+      </h2>
+
+      <p class="text-lg leading-relaxed text-gray-600">
+        I’m <strong class="text-gray-800">Sandeep</strong>, a passionate
+        <strong>Frontend Developer</strong> focused on creating beautiful,
+        responsive, and accessible web experiences. I specialize in building UIs
+        using <strong>Angular</strong> and <strong>Tailwind CSS</strong>, and I
+        am always eager to explore new web technologies to stay ahead in the
+        field.
+      </p>
+
+      <p class="text-gray-500">
+        My goal is to develop intuitive, fast, and user-friendly websites,
+        combining functionality with modern design principles.
+      </p>
+
+      <!-- Download Resume Button (Left Side) -->
+      <a
+        href="assets/Sandeep-Resume.pdf"
+        download="Sandeep_Resume.pdf"
+        class="px-6 py-2 mt-8 text-sm text-white transition bg-indigo-600 rounded-full hover:bg-indigo-700"
+      >
+        Download Resume
+      </a>
+    </div>
+
+    <!--  Right: Tech Icons with PNGs -->
+    <div class="animate-slide-in-right">
+      <h3 class="text-2xl font-semibold text-gray-700">
+        Technologies I work with:
+      </h3>
+
+      <div class="mt-6 space-y-6">
+        <div class="flex items-center text-lg text-gray-700">
+          <img
+            src="assets/icons/angular.png"
+            alt="Angular"
+            class="w-8 h-8 mr-4"
+          />
+          <span>Angular</span>
+        </div>
+        <div class="flex items-center text-lg text-gray-700">
+          <img
+            src="assets/icons/tailwind.png"
+            alt="Tailwind CSS"
+            class="w-8 h-8 mr-4"
+          />
+          <span>Tailwind CSS</span>
+        </div>
+        <div class="flex items-center text-lg text-gray-700">
+          <img
+            src="assets/icons/javascript.webp"
+            alt="JavaScript"
+            class="w-8 h-8 mr-4"
+          />
+          <span>JavaScript</span>
+        </div>
+        <div class="flex items-center text-lg text-gray-700">
+          <img
+            src="assets/icons/typescript.png"
+            alt="TypeScript"
+            class="w-8 h-8 mr-4"
+          />
+          <span>TypeScript</span>
+        </div>
+        <div class="flex items-center text-lg text-gray-700">
+          <img
+            src="assets/icons/htmlcss.png"
+            alt="HTML & CSS"
+            class="w-8 h-8 mr-4"
+          />
+          <span>HTML & CSS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  Right Arrow to navigate to next section or page -->
+  <div class="flex justify-end mt-10 animate-fade-in">
+    <a
+      href="/projects"
+      class="flex items-center gap-2 text-indigo-600 transition-colors duration-300 group hover:text-indigo-800"
+    >
+      <span class="text-lg font-medium">Next: Projects</span>
+      <svg
+        class="transition-transform duration-300 transform w-7 h-7 group-hover:translate-x-1"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</section>

@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Global Styles */
+body {
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .light-mode {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --primary-color: #007BFF;
+  }
+  
+  .dark-mode {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #bb86fc;
+  }
+  
+  /* Apply custom variables */
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  /* Customize your button or other elements */
+  button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+  }
+  

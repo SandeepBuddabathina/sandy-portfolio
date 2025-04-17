@@ -1,0 +1,30 @@
+<section id="projects" class="px-6 py-20 bg-gray-50">
+    <div class="mx-auto max-w-7xl">
+      <h2 class="mb-12 text-4xl font-bold text-center text-gray-800">
+        Featured <span class="text-indigo-600">Projects</span>
+      </h2>
+  
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+        
+        <!-- Project Card -->
+        <div *ngFor="let project of projects" class="p-5 overflow-hidden transition duration-500 transform bg-white shadow-xl rounded-2xl hover:-translate-y-2 animate-fade-up">
+          <img [src]="project.image" alt="{{ project.title }}" class="object-cover w-full h-40 mb-4 rounded-xl" />
+          <h3 class="mb-2 text-xl font-semibold text-gray-800">{{ project.title }}</h3>
+          <p class="mb-4 text-sm text-gray-600">{{ project.description }}</p>
+  
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span *ngFor="let tech of project.techStack" class="px-2 py-1 text-xs text-indigo-700 bg-indigo-100 rounded-full">
+              {{ tech }}
+            </span>
+          </div>
+  
+          <div class="flex justify-between">
+            <a [href]="project.github" target="_blank" class="text-sm font-medium text-indigo-600 hover:underline">GitHub</a>
+            <a [href]="project.live" target="_blank" class="text-sm font-medium text-green-600 hover:underline">Live Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

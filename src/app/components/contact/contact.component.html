@@ -1,0 +1,51 @@
+<section class="flex items-center justify-center min-h-screen px-6 pt-32 bg-gray-50">
+  <div class="grid w-full max-w-6xl grid-cols-1 gap-12 md:grid-cols-2">
+    <!-- Left Info -->
+    <div class="animate-slide-in-left">
+      <h2 class="mb-6 text-3xl font-bold text-indigo-600">Let's Connect</h2>
+      <p class="mb-8 text-gray-600">
+        Have a project in mind or just want to say hi? I'm always open to connect!
+      </p>
+      <ul class="space-y-4 text-lg text-gray-700">
+        <li><span class="font-bold text-indigo-500">📍</span> Hyderabad, India</li>
+        <li><span class="font-bold text-indigo-500">📞</span> +91 99999999</li>
+        <li><span class="font-bold text-indigo-500">✉️</span> b99sandeep&#64;gmail.com</li>
+      </ul>
+    </div>
+
+    <!-- Right Form -->
+    <form class="space-y-6 animate-slide-in-right" (ngSubmit)="submitForm()">
+      <input type="text" placeholder="Your Name" [(ngModel)]="name" name="name" required
+        class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      <input type="email" placeholder="Your Email" [(ngModel)]="email" name="email" required
+        class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+      <textarea rows="5" placeholder="Your Message" [(ngModel)]="message" name="message" required
+        class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"></textarea>
+      <button type="submit" [disabled]="!name || !email || !message"
+        class="px-6 py-3 text-white transition-all duration-300 bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-50">
+        Send Message
+      </button>
+    </form>
+  </div>
+
+  <!-- Chat Button -->
+  <div class="fixed z-50 p-4 text-white bg-indigo-600 rounded-full cursor-pointer bottom-10 right-10 animate-pulse"
+    (click)="toggleChat()" id="chatButton" [class.hidden]="isChatOpen">
+    💬
+  </div>
+
+  <!-- Chatbot Window -->
+  <div class="fixed bottom-0 right-0 hidden w-full max-w-md p-4 m-8 bg-white rounded-lg shadow-lg" id="chatWindow"
+    (click)="stopEvent($event)">
+    <div class="flex flex-col h-80">
+      <div class="flex-1 overflow-y-auto" id="chatMessages">
+        <div class="text-gray-700">Hi, how can I help you?</div>
+      </div>
+      <div class="flex mt-4">
+        <input [(ngModel)]="userMessage" (keyup.enter)="sendMessage()" type="text" placeholder="Type your message"
+          class="w-full p-2 border border-gray-300 rounded-l-lg focus:outline-none" />
+        <button (click)="sendMessage()" class="p-2 text-white bg-indigo-600 rounded-r-lg">Send</button>
+      </div>
+    </div>
+  </div>
+</section>
