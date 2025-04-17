@@ -1,0 +1,34 @@
+/* Slide-in from left */
+@keyframes slideInLeft {
+    0% {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Slide-in from right */
+  @keyframes slideInRight {
+    0% {
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Apply slide-in animation for the left part (Contact Info) */
+  .animate-slide-in-left {
+    animation: slideInLeft 1s ease-out forwards;
+  }
+  
+  /* Apply slide-in animation for the right part (Form) */
+  .animate-slide-in-right {
+    animation: slideInRight 1s ease-out forwards;
+  }
+  

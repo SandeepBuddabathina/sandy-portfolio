@@ -1,0 +1,50 @@
+@keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-in-out both;
+  }
+  /* Add these styles to your custom CSS file */
+
+.projects-carousel-container {
+  perspective: 1000px;
+}
+
+.projects-carousel {
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
+
+.project-card {
+  width: 300px;
+  transform-origin: center center;
+  transition: transform 0.5s ease-in-out;
+}
+
+.project-card:hover {
+  transform: rotateY(10deg) rotateX(10deg) scale(1.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.projects-carousel:hover {
+  transform: rotateY(20deg);
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
