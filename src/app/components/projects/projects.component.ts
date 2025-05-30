@@ -30,6 +30,14 @@ export class ProjectsComponent {
       image: 'assets/projects/food-app.png',
       github: 'https://github.com/SandeepBuddabathina/food-web.git',
       live: 'https://regal-snickerdoodle-5a8638.netlify.app/'
+    } ,
+      {
+      title: 'Exam - Platform Application (Frontend)',
+      description: 'A basic frontend Test conducting application with a user-friendly interface.',
+      techStack: ['Angulat','Tailwind CSS', 'Typescript'],
+      image: 'assets/projects/exam.jpg',
+      github: 'https://github.com/SandeepBuddabathina/TechExam.git',
+      live: 'https://tech-exam-kappa.vercel.app/'
     } 
   ];
 }
