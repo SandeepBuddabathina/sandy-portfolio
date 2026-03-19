@@ -1,16 +1,44 @@
 <header class="fixed top-0 z-50 w-full bg-white shadow-lg animate-slide-down">
     <div class="flex items-center justify-between px-6 py-4 mx-auto max-w-7xl">
-      <h1 class="text-2xl font-extrabold text-gray-800 drop-shadow-[2px_2px_0_rgba(99,102,241,0.5)] transform transition duration-300 hover:scale-105">
+      <h1 class="text-2xl font-extrabold text-gray-800 drop-shadow-[2px_2px_0_rgba(99,102,241,0.5)] transform transition duration-300 hover:scale-105 cursor-pointer" (click)="scrollToSection('home')">
         <!-- Sandeep -->
         <span class="text-indigo-600"></span>
       </h1>       
-      <nav class="space-x-8 text-lg font-medium text-gray-600">
-        <a routerLink="/" class="transition duration-300 hover:text-indigo-600">Home</a>
-        <a routerLink="/about" class="transition duration-300 hover:text-indigo-600">About</a>
-        <a routerLink="/projects" class="transition duration-300 hover:text-indigo-600">Projects</a>
-        <a routerLink="/contact" routerLinkActive="text-indigo-600" class="transition duration-300 hover:text-indigo-600">Contact</a>
-
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden space-x-8 text-lg font-medium text-gray-600 md:flex">
+        <a (click)="scrollToSection('home')" class="transition duration-300 cursor-pointer hover:text-indigo-600">Home</a>
+        <a (click)="scrollToSection('about')" class="transition duration-300 cursor-pointer hover:text-indigo-600">About</a>
+        <a (click)="scrollToSection('projects')" class="transition duration-300 cursor-pointer hover:text-indigo-600">Projects</a>
+        <a (click)="scrollToSection('certifications')" class="transition duration-300 cursor-pointer hover:text-indigo-600">Certifications</a>
+        <a (click)="scrollToSection('contact')" class="transition duration-300 cursor-pointer hover:text-indigo-600">Contact</a>
       </nav>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        (click)="toggleMobileMenu()" 
+        class="block p-1 text-gray-600 rounded-md md:hidden hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+        aria-label="Toggle menu"
+      >
+        <svg *ngIf="!isMobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg *ngIf="isMobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Dropdown -->
+    <div 
+      *ngIf="isMobileMenuOpen" 
+      class="flex flex-col px-6 py-4 space-y-4 text-lg font-medium text-gray-600 bg-white border-t border-gray-100 shadow-lg md:hidden animate-slide-down"
+    >
+      <a (click)="scrollToSection('home')" class="block transition duration-300 cursor-pointer hover:text-indigo-600">Home</a>
+      <a (click)="scrollToSection('about')" class="block transition duration-300 cursor-pointer hover:text-indigo-600">About</a>
+      <a (click)="scrollToSection('projects')" class="block transition duration-300 cursor-pointer hover:text-indigo-600">Projects</a>
+      <a (click)="scrollToSection('certifications')" class="block transition duration-300 cursor-pointer hover:text-indigo-600">Certifications</a>
+      <a (click)="scrollToSection('contact')" class="block transition duration-300 cursor-pointer hover:text-indigo-600">Contact</a>
     </div>
   </header>
   
