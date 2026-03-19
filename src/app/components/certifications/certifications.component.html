@@ -1,0 +1,34 @@
+<section id="certifications" class="px-6 py-20 bg-white">
+  <div class="mx-auto max-w-7xl">
+    <h2 class="mb-12 text-4xl font-bold text-center text-gray-800">
+      My <span class="text-indigo-600">Certifications</span>
+    </h2>
+
+    <!-- Certifications Grid -->
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+      
+      <!-- Certification Card (Entire Card is Clickable) -->
+      <a *ngFor="let cert of certifications" 
+         [href]="cert.link" 
+         target="_blank" 
+         class="block p-5 overflow-hidden transition duration-500 transform bg-gray-50 border border-gray-100 shadow-lg rounded-2xl hover:-translate-y-2 hover:shadow-2xl animate-fade-up">
+         
+        <!-- Certificate Image -->
+        <div class="relative w-full h-48 mb-4 overflow-hidden rounded-xl bg-gray-100 flex items-center justify-center">
+          <img [src]="cert.image" [alt]="cert.title" class="object-cover object-top w-full h-full transition-transform duration-500 group-hover:scale-105" />
+        </div>
+        
+        <h3 class="mb-1 text-xl font-semibold text-gray-800 line-clamp-2">{{ cert.title }}</h3>
+        <p class="text-sm font-medium text-indigo-600 mb-2">{{ cert.issuer }} &bull; <span class="text-gray-500 font-normal">{{ cert.date }}</span></p>
+        <p class="mb-4 text-sm text-gray-600 line-clamp-3">{{ cert.description }}</p>
+
+        <div class="flex items-center text-sm font-bold text-indigo-600 group">
+          View Credential
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1 transition-transform transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>

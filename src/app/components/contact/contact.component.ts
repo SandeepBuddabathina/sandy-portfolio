@@ -99,15 +99,15 @@ export class ContactComponent {
       const messageDiv = document.createElement('div');
       const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      messageDiv.className = `flex items-end ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+      messageDiv.className = `flex w-full mb-3 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
       messageDiv.innerHTML = `
-        <div class="max-w-xs px-4 py-2 rounded-xl shadow ${
+        <div class="max-w-[85%] px-4 py-2 rounded-2xl shadow-sm text-sm border ${
           sender === 'user'
-            ? 'bg-indigo-600 text-white rounded-br-none'
-            : 'bg-gray-200 text-gray-800 rounded-bl-none'
+            ? 'bg-indigo-600 text-white rounded-br-none border-indigo-700'
+            : 'bg-white text-gray-800 rounded-bl-none border-gray-100'
         }">
-          <div class="text-sm">${message}</div>
-          <div class="text-xs mt-1 text-right text-gray-400">${timestamp}</div>
+          <div>${message}</div>
+          <div class="text-[10px] mt-1 text-right ${sender === 'user' ? 'text-indigo-200' : 'text-gray-400'}">${timestamp}</div>
         </div>
       `;
 
