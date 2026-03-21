@@ -8,6 +8,14 @@ import { Component } from '@angular/core';
 export class ProjectsComponent {
   projects = [
     {
+      title: 'Pizza Ordering Application (Frontend)',
+       description: 'A basic frontend Pizza ordering application with a user-friendly interface.',
+      techStack: ['Angulat','Tailwind CSS', 'Typescript'],
+      image: 'assets/projects/dominos.png',
+      github: 'https://github.com/SandeepBuddabathina/dominos.git',
+      live: 'https://pizza-clone-gilt.vercel.app/login'
+    },
+    {
       title: 'Video Conferencing App',
       description: 'Real-time video conferencing using WebRTC, Socket.io, Angular, and Node.js.',
       techStack: ['Angular', 'WebRTC', 'Node.js', 'Socket.io'],
