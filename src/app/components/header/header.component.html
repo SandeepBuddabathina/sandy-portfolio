@@ -12,6 +12,7 @@
         <a (click)="scrollToSection('projects')" class="transition duration-300 cursor-pointer hover:text-indigo-600">Projects</a>
         <a (click)="scrollToSection('certifications')" class="transition duration-300 cursor-pointer hover:text-indigo-600">Certifications</a>
         <a (click)="scrollToSection('contact')" class="transition duration-300 cursor-pointer hover:text-indigo-600">Contact</a>
+        <a routerLink="/build" (click)="closeMobileMenu()" class="transition duration-300 cursor-pointer hover:text-indigo-600">Build</a>
       </nav>
 
       <!-- Mobile Menu Button -->
@@ -39,6 +40,6 @@
       <a (click)="scrollToSection('projects')" class="block transition duration-300 cursor-pointer hover:text-indigo-600">Projects</a>
       <a (click)="scrollToSection('certifications')" class="block transition duration-300 cursor-pointer hover:text-indigo-600">Certifications</a>
       <a (click)="scrollToSection('contact')" class="block transition duration-300 cursor-pointer hover:text-indigo-600">Contact</a>
+      <a routerLink="/build" (click)="closeMobileMenu()" class="block transition duration-300 cursor-pointer hover:text-indigo-600">Build</a>
     </div>
   </header>
-  

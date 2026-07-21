@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { FooterComponent } from './components/footer/footer.component';
 import { ScrollAnimateDirective } from './directives/scroll-animate.directive';
 import { CertificationsComponent } from './components/certifications/certifications.component';
+import { BuildComponent } from './components/build/build.component';
+import { WebsitePreviewComponent } from './components/website-preview/website-preview.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { CertificationsComponent } from './components/certifications/certificati
     ContactComponent,
     FooterComponent,
     ScrollAnimateDirective,
-    CertificationsComponent
+    CertificationsComponent,
+    BuildComponent,
+    WebsitePreviewComponent
   ],
   imports: [
     BrowserModule,

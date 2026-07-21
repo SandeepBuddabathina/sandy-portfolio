@@ -8,7 +8,16 @@ html {
 }
 body {
     transition: background-color 0.3s, color 0.3s;
+    font-family: 'Noto Sans', sans-serif;
   }
+
+button, input, textarea, select {
+  font-family: inherit;
+}
+
+textarea {
+  resize: none;
+}
 .animation-delay-2000 {
   animation-delay: 2s;
 }

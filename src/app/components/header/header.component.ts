@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   isMobileMenuOpen = false;
+
+  constructor(private router: Router) {}
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
@@ -17,7 +20,15 @@ export class HeaderComponent {
     if (element) {
       const y = element.getBoundingClientRect().top + window.scrollY - 72; // Adjust for fixed header
       window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      this.router.navigate(['/']).then(() => {
+        setTimeout(() => this.scrollToSection(sectionId), 100);
+      });
     }
     this.isMobileMenuOpen = false; // Close mobile menu after clicking
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
   }
 }
