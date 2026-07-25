@@ -1,23 +1,4 @@
-.aurora,.preview-window{--bg:#eef2ff;--ink:#172554;--accent:#4f46e5;--soft:#c7d2fe}
-.midnight{--bg:#09090f;--ink:#f8fafc;--accent:#a78bfa;--soft:#24243a}
-.studio{--bg:#f8f7f4;--ink:#191919;--accent:#ea580c;--soft:#fed7aa}
-.bloom{--bg:#fff7ed;--ink:#3f2a1d;--accent:#c2416c;--soft:#fecdd3}
-.cinema{--bg:#050508;--ink:#ffffff;--accent:#e11d48;--soft:#1f1924}
-.nexus{--bg:#030712;--ink:#f9fafb;--accent:#06b6d4;--soft:#111827}
-.vanguard{--bg:#111111;--ink:#ffffff;--accent:#f59e0b;--soft:#262626}
-.quantum{--bg:#020617;--ink:#f8fafc;--accent:#38bdf8;--soft:#0f172a}
-.cyber{--bg:#090014;--ink:#fae8ff;--accent:#d946ef;--soft:#2a004a}
-.luxe{--bg:#121212;--ink:#f5f5f7;--accent:#d4af37;--soft:#222222}
-.craft{--bg:#f5f5f4;--ink:#0c0a09;--accent:#57534e;--soft:#e7e5e4}
-.reel{--bg:#0c0a09;--ink:#fafaf9;--accent:#f97316;--soft:#292524}
-.audio{--bg:#0f172a;--ink:#f8fafc;--accent:#10b981;--soft:#1e293b}
-.apex{--bg:#09090b;--ink:#fafafa;--accent:#84cc16;--soft:#27272a}
-.capital{--bg:#0f172a;--ink:#ffffff;--accent:#2563eb;--soft:#1e293b}
-.pulse{--bg:#fafafa;--ink:#18181b;--accent:#6366f1;--soft:#e4e4e7}
-.skyline{--bg:#18181b;--ink:#fafafa;--accent:#3b82f6;--soft:#27272a}
-.flavor{--bg:#1c1917;--ink:#fafaf9;--accent:#ef4444;--soft:#292524}
-.zenith{--bg:#000000;--ink:#ffffff;--accent:#a855f7;--soft:#18181b}
-.frame{--bg:#141414;--ink:#f5f5f5;--accent:#eab308;--soft:#262626}
+/* Theme variables moved to src/styles/shared.css */
 
 /* Edit Form Fields */
 .input-field {
