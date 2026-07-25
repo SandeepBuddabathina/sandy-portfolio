@@ -14,6 +14,7 @@ import { ScrollAnimateDirective } from './directives/scroll-animate.directive';
 import { CertificationsComponent } from './components/certifications/certifications.component';
 import { BuildComponent } from './components/build/build.component';
 import { WebsitePreviewComponent } from './components/website-preview/website-preview.component';
+import { SafeUrlPipe, SafeResourceUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { WebsitePreviewComponent } from './components/website-preview/website-pr
     ScrollAnimateDirective,
     CertificationsComponent,
     BuildComponent,
-    WebsitePreviewComponent
+    WebsitePreviewComponent,
+    SafeUrlPipe,
+    SafeResourceUrlPipe
   ],
   imports: [
     BrowserModule,
