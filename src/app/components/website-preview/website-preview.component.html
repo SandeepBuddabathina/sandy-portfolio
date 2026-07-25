@@ -1,7 +1,341 @@
-<div class="site" [ngClass]="style">
-  <section class="hero"><nav><b>{{ content.brand }}</b><div><a href="#features">{{ content.navOne }}</a><a href="#stories">{{ content.navTwo }}</a></div></nav><div class="hero-copy"><small>MAKE YOUR MARK</small><h1>{{ content.headline }}</h1><p>{{ content.description }}</p><a href="#features">{{ content.buttonText }} <span>→</span></a></div></section>
-  <section class="intro"><small>BUILT FOR MOMENTUM</small><h2>{{ content.sectionTitle }}</h2><p>{{ content.sectionDescription }}</p></section>
-  <section id="features" class="features"><article><b>01</b><h3>{{ content.featureOne }}</h3><p>Everything you need, beautifully organized in one focused place.</p></article><article><b>02</b><h3>{{ content.featureTwo }}</h3><p>Move from your first idea to your best work without friction.</p></article><article><b>03</b><h3>{{ content.featureThree }}</h3><p>Make better decisions with a clear view of what matters.</p></article></section>
-  <section id="stories" class="quote"><p>“{{ content.testimonial }}”</p><b>— A happy customer</b></section>
-  <footer>Created by Sandeep B.</footer>
+<div class="site" [ngClass]="style" [style.--accent]="content.accentColor || '#6366f1'">
+
+  <!-- 🚀 SaaS 5-SECTION HIGH-FIDELITY TEMPLATE LAYOUT -->
+  <ng-container *ngIf="type === 'saas'">
+    <!-- Nav Header -->
+    <header class="saas-nav">
+      <div class="nav-brand">
+        <span class="brand-logo" [style.background]="content.accentColor || '#6366f1'">N</span>
+        <span class="brand-text">{{ content.brand }}</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#enterprise">Enterprise</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="btn-ghost" (click)="openAuthModal('signin')">Sign In</button>
+        <button class="btn-primary-glow" [style.background]="content.accentColor || '#6366f1'" (click)="openAuthModal('register')">{{ content.buttonText }}</button>
+      </div>
+    </header>
+
+    <!-- SECTION 1: HERO SECTION -->
+    <section class="saas-hero">
+      <div class="hero-badge">
+        <span class="badge-dot" [style.background]="content.accentColor || '#6366f1'"></span>
+        <span>{{ content.badgeText || 'NEXT-GEN AI PLATFORM' }}</span>
+      </div>
+      <h1 class="hero-title">{{ content.headline }}</h1>
+      <p class="hero-desc">{{ content.description }}</p>
+      <div class="hero-actions">
+        <button class="btn-primary-glow" [style.background]="content.accentColor || '#6366f1'" (click)="openAuthModal('register')">{{ content.buttonText }} →</button>
+        <button class="btn-outline" (click)="openVideoModal('Product Demo Walkthrough', content.mediaUrl)">Watch Demo</button>
+      </div>
+
+      <!-- App Dashboard Mockup -->
+      <div class="dashboard-mockup" (click)="openVideoModal('Interactive Dashboard Preview', content.mediaUrl)">
+        <div class="mockup-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="mockup-title">app.{{ (content.brand || 'nexora').toLowerCase() }}.ai/dashboard</span>
+        </div>
+        <div class="mockup-body">
+          <ng-container *ngIf="content.mediaUrl">
+            <iframe *ngIf="isYoutubeUrl(content.mediaUrl)" [src]="getYoutubeEmbedUrl(content.mediaUrl) | safeResourceUrl" class="mockup-media" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <img *ngIf="!isYoutubeUrl(content.mediaUrl) && content.mediaType === 'image'" [src]="content.mediaUrl | safeUrl" class="mockup-media" alt="Dashboard Mockup" />
+            <video *ngIf="!isYoutubeUrl(content.mediaUrl) && content.mediaType === 'video'" [src]="content.mediaUrl | safeUrl" class="mockup-media" controls playsinline></video>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: STATS & SOCIAL PROOF -->
+    <section class="saas-stats">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-num">{{ content.metric1Val || '99.99%' }}</span>
+          <span class="stat-lbl">{{ content.metric1Label || 'Uptime SLA' }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">{{ content.metric2Val || '10M+' }}</span>
+          <span class="stat-lbl">{{ content.metric2Label || 'Automated Workflows' }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">{{ content.metric3Val || '< 15ms' }}</span>
+          <span class="stat-lbl">{{ content.metric3Label || 'Global Latency' }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: CORE FEATURES (CLEAN CARDS - CLICK FOR FEATURE DEEP-DIVE MODAL) -->
+    <section id="features" class="saas-features">
+      <div class="section-head">
+        <span class="section-tag" [style.color]="content.accentColor || '#6366f1'">CAPABILITIES</span>
+        <h2>Everything You Need to Scale</h2>
+        <p>Click any card to explore full architecture specs and live capabilities.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card" (click)="openFeatureModal(content.featureOneTitle || 'Autonomous AI Agents', content.featureOneDesc || 'Deploy self-executing AI pipelines that automate code reviews, testing, and deployment.')">
+          <h3>{{ content.featureOneTitle || 'Autonomous AI Agents' }}</h3>
+          <p>{{ content.featureOneDesc || 'Deploy self-executing AI pipelines that automate code reviews, testing, and deployment.' }}</p>
+        </div>
+        <div class="feature-card" (click)="openFeatureModal(content.featureTwoTitle || 'Enterprise Security', content.featureTwoDesc || 'SOC2 Type II certified with end-to-end encryption and zero data retention guarantees.')">
+          <h3>{{ content.featureTwoTitle || 'Enterprise Security' }}</h3>
+          <p>{{ content.featureTwoDesc || 'SOC2 Type II certified with end-to-end encryption and zero data retention guarantees.' }}</p>
+        </div>
+        <div class="feature-card" (click)="openFeatureModal(content.featureThreeTitle || 'Real-Time Analytics', content.featureThreeDesc || 'Monitor token consumption, agent throughput, and latency with millisecond precision.')">
+          <h3>{{ content.featureThreeTitle || 'Real-Time Analytics' }}</h3>
+          <p>{{ content.featureThreeDesc || 'Monitor token consumption, agent throughput, and latency with millisecond precision.' }}</p>
+        </div>
+        <div class="feature-card" (click)="openFeatureModal(content.featureFourTitle || 'Collaborative Workspace', content.featureFourDesc || 'Real-time multi-user prompt editing, version control, and instant preview sandboxes.')">
+          <h3>{{ content.featureFourTitle || 'Collaborative Workspace' }}</h3>
+          <p>{{ content.featureFourDesc || 'Real-time multi-user prompt editing, version control, and instant preview sandboxes.' }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: PRICING PLANS (CLICK FOR PLAN CHECKOUT MODAL) -->
+    <section id="pricing" class="saas-pricing">
+      <div class="section-head">
+        <span class="section-tag" [style.color]="content.accentColor || '#6366f1'">TRANSPARENT PRICING</span>
+        <h2>Simple Plans for Teams of Any Size</h2>
+        <p>Start free for 14 days. No credit card required.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <span class="plan-name">Starter Plan</span>
+          <div class="plan-price">{{ content.starterPrice || '$29/mo' }}</div>
+          <p class="plan-desc">For individuals and fast-moving projects.</p>
+          <ul class="plan-features">
+            <li>Up to 5 AI Agents</li>
+            <li>100K API Calls / mo</li>
+            <li>Community Support</li>
+          </ul>
+          <button class="btn-plan" (click)="openCheckoutModal('Starter Plan', content.starterPrice || '$29/mo')">Select Starter Plan</button>
+        </div>
+
+        <div class="price-card popular" [style.borderColor]="content.accentColor || '#6366f1'">
+          <span class="popular-badge" [style.background]="content.accentColor || '#6366f1'">MOST POPULAR</span>
+          <span class="plan-name">Pro Plan</span>
+          <div class="plan-price">{{ content.proPrice || '$79/mo' }}</div>
+          <p class="plan-desc">For growing engineering & product teams.</p>
+          <ul class="plan-features">
+            <li>Unlimited AI Agents</li>
+            <li>2M API Calls / mo</li>
+            <li>Priority 24/7 Support</li>
+            <li>Custom Integrations</li>
+          </ul>
+          <button class="btn-plan-primary" [style.background]="content.accentColor || '#6366f1'" (click)="openCheckoutModal('Pro Plan', content.proPrice || '$79/mo')">Start 14-Day Free Trial</button>
+        </div>
+
+        <div class="price-card">
+          <span class="plan-name">Enterprise Plan</span>
+          <div class="plan-price">{{ content.enterprisePrice || 'Custom' }}</div>
+          <p class="plan-desc">For high-scale enterprise deployments.</p>
+          <ul class="plan-features">
+            <li>Dedicated GPU Clusters</li>
+            <li>Custom SLA guarantees</li>
+            <li>SOC2 & Dedicated Account Mgr</li>
+          </ul>
+          <button class="btn-plan" (click)="openCheckoutModal('Enterprise Plan', content.enterprisePrice || 'Custom Pricing')">Subscribe Enterprise</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: TESTIMONIAL & FINAL CTA -->
+    <section class="saas-cta-banner">
+      <div class="testimonial-box" *ngIf="content.testimonialQuote">
+        <p class="quote">{{ content.testimonialQuote }}</p>
+        <span class="author">{{ content.testimonialAuthor }}</span>
+      </div>
+      <div class="banner-content">
+        <h2>Accelerate Your Engineering Workflow Today</h2>
+        <p>Join over 10,000+ developers building with {{ content.brand }}.</p>
+        <button class="btn-primary-glow" [style.background]="content.accentColor || '#6366f1'" (click)="openAuthModal('register')">{{ content.buttonText }} Now →</button>
+      </div>
+    </section>
+  </ng-container>
+
+  <!-- 🍿 OTT STREAMING LAYOUT -->
+  <ng-container *ngIf="type === 'ott'">
+    <header class="ott-nav">
+      <span class="brand" [style.color]="content.accentColor || '#e11d48'">{{ content.brand }}</span>
+      <nav><a href="#">{{ content.navOne }}</a><a href="#">{{ content.navTwo }}</a><a href="#">Trending</a><a href="#">Originals</a></nav>
+      <div class="nav-cta">
+        <button class="btn-ghost" (click)="openAuthModal('signin')">Sign In</button>
+        <button class="sub-btn" [style.background]="content.accentColor || '#e11d48'" (click)="openCheckoutModal('OTT VIP Access', content.subscriptionPrice || '$9.99/mo')">{{ content.subscriptionPrice }}</button>
+      </div>
+    </header>
+    <main class="ott-hero-section">
+      <ng-container *ngIf="content.mediaUrl">
+        <iframe *ngIf="isYoutubeUrl(content.mediaUrl)" [src]="getYoutubeEmbedUrl(content.mediaUrl) | safeResourceUrl" class="ott-hero-video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <video *ngIf="!isYoutubeUrl(content.mediaUrl)" class="ott-hero-video" controls playsinline [src]="content.mediaUrl | safeUrl"></video>
+      </ng-container>
+      <div class="ott-hero-content">
+        <span class="badge" [style.background]="content.accentColor || '#e11d48'">{{ content.genreTag }}</span>
+        <h1>{{ content.headline }}</h1>
+        <p>{{ content.description }}</p>
+        <div class="cta-row">
+          <button class="btn-primary" [style.background]="content.accentColor || '#e11d48'" (click)="openVideoModal(content.headline, content.mediaUrl)">Play Now</button>
+          <button class="btn-secondary" (click)="openCheckoutModal('VIP Subscription', content.subscriptionPrice || '$9.99/mo')">{{ content.buttonText }}</button>
+        </div>
+      </div>
+    </main>
+
+    <section class="ott-section">
+      <h2>Trending World Premieres</h2>
+      <div class="movie-grid">
+        <div *ngFor="let mv of [
+          {t: content.movie1Title, u: content.movie1Url},
+          {t: content.movie2Title, u: content.movie2Url},
+          {t: content.movie3Title, u: content.movie3Url}
+        ]" class="card" (click)="openVideoModal(mv.t, mv.u)">
+          <div class="video-wrap">
+            <ng-container *ngIf="mv.u">
+              <iframe *ngIf="isYoutubeUrl(mv.u)" [src]="getYoutubeEmbedUrl(mv.u) | safeResourceUrl" class="card-video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <video *ngIf="!isYoutubeUrl(mv.u)" class="card-video" controls playsinline [src]="mv.u | safeUrl"></video>
+            </ng-container>
+          </div>
+          <h3>{{ mv.t }}</h3>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+
+  <!-- 🎥 VIDEO STUDIO LAYOUT -->
+  <ng-container *ngIf="type === 'video'">
+    <header class="gen-nav">
+      <span class="brand" [style.color]="content.accentColor || '#f97316'">{{ content.brand }}</span>
+      <div class="nav-cta">
+        <button class="btn-ghost" (click)="openAuthModal('signin')">Client Login</button>
+        <button class="btn-primary" [style.background]="content.accentColor || '#f97316'" (click)="openAuthModal('register')">{{ content.buttonText }}</button>
+      </div>
+    </header>
+    <section class="gen-hero" style="padding:6rem 6%;min-height:70vh;position:relative;overflow:hidden;display:flex;align-items:flex-end;">
+      <ng-container *ngIf="content.mediaUrl">
+        <iframe *ngIf="isYoutubeUrl(content.mediaUrl)" [src]="getYoutubeEmbedUrl(content.mediaUrl) | safeResourceUrl" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <video *ngIf="!isYoutubeUrl(content.mediaUrl)" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" controls playsinline [src]="content.mediaUrl | safeUrl"></video>
+      </ng-container>
+      <div style="position:relative;z-index:10;padding-bottom:2rem;">
+        <h1>{{ content.headline }}</h1>
+        <p>{{ content.description }}</p>
+      </div>
+    </section>
+  </ng-container>
+
+  <!-- ─── CONTEXT-SPECIFIC MODAL OVERLAYS ─── -->
+
+  <!-- 1. FEATURE DETAIL DEEP-DIVE MODAL -->
+  <div *ngIf="activeModal === 'feature' && activeFeature" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-card feature-modal-card" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeModal()">✕</button>
+      <span class="section-tag" [style.color]="content.accentColor || '#6366f1'">FEATURE OVERVIEW</span>
+      <h2 style="font-size:1.6rem;font-weight:900;margin:0.5rem 0 1rem;color:#fff;">{{ activeFeature.title }}</h2>
+      <p style="font-size:1rem;color:#94a3b8;line-height:1.6;margin-bottom:1.5rem;">{{ activeFeature.desc }}</p>
+
+      <div class="feature-spec-box">
+        <div class="spec-item">
+          <strong>Architecture:</strong> Distributed Edge Microservices
+        </div>
+        <div class="spec-item">
+          <strong>Encryption:</strong> AES-256 / TLS 1.3 Zero-Trust
+        </div>
+        <div class="spec-item">
+          <strong>SLA Guarantee:</strong> 99.99% Availability
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+        <button class="modal-btn-submit" [style.background]="content.accentColor || '#6366f1'" (click)="openCheckoutModal('Pro Plan', content.proPrice || '$79/mo')">Try Feature in Pro Plan</button>
+        <button class="btn-outline" style="border-radius:12px;padding:0.85rem 1.2rem;" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CHECKOUT & PLAN SUBSCRIPTION MODAL -->
+  <div *ngIf="activeModal === 'checkout' && activeCheckout" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-card checkout-modal-card" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeModal()">✕</button>
+      <span class="section-tag" [style.color]="content.accentColor || '#6366f1'">SUBSCRIPTION CHECKOUT</span>
+      <h2 style="font-size:1.6rem;font-weight:900;margin:0.5rem 0 0.5rem;color:#fff;">{{ activeCheckout.plan }}</h2>
+      <div style="font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:1rem;" [style.color]="content.accentColor || '#6366f1'">{{ activeCheckout.price }}</div>
+
+      <div *ngIf="authSuccessMessage" class="auth-alert">
+        {{ authSuccessMessage }}
+      </div>
+
+      <form (submit)="$event.preventDefault(); handleCheckoutSubmit();" class="auth-form">
+        <div class="form-group">
+          <label>Billing Cycle</label>
+          <div class="modal-tabs" style="margin-bottom:0;">
+            <button type="button" [class.active]="billingCycle === 'Monthly'" (click)="billingCycle = 'Monthly'">Monthly Billing</button>
+            <button type="button" [class.active]="billingCycle === 'Annual'" (click)="billingCycle = 'Annual'">Annual (Save 20%)</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Account Email</label>
+          <input type="email" placeholder="billing@company.com" required />
+        </div>
+
+        <button type="submit" class="modal-btn-submit" [style.background]="content.accentColor || '#6366f1'">
+          Confirm & Activate {{ activeCheckout.plan }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. AUTH MODAL (SIGN IN / REGISTER) -->
+  <div *ngIf="activeModal === 'signin' || activeModal === 'register'" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeModal()">✕</button>
+
+      <div class="modal-tabs">
+        <button [class.active]="activeModal === 'signin'" (click)="openAuthModal('signin')">Sign In</button>
+        <button [class.active]="activeModal === 'register'" (click)="openAuthModal('register')">Create Account</button>
+      </div>
+
+      <div *ngIf="authSuccessMessage" class="auth-alert">
+        {{ authSuccessMessage }}
+      </div>
+
+      <form (submit)="$event.preventDefault(); handleAuthSubmit();" class="auth-form">
+        <div *ngIf="activeModal === 'register'" class="form-group">
+          <label>Full Name</label>
+          <input type="text" [(ngModel)]="authName" name="name" placeholder="John Doe" required />
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" [(ngModel)]="authEmail" name="email" placeholder="name@company.com" required />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="authPassword" name="password" placeholder="••••••••" required />
+        </div>
+
+        <button type="submit" class="modal-btn-submit" [style.background]="content.accentColor || '#6366f1'">
+          {{ activeModal === 'signin' ? 'Sign In to ' + content.brand : 'Register New Account' }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. VIDEO PLAYER MODAL -->
+  <div *ngIf="activeModal === 'video' && activeVideo" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-card video-card" (click)="$event.stopPropagation()">
+      <div class="modal-video-head">
+        <h3>{{ activeVideo.title }}</h3>
+        <button class="modal-close" (click)="closeModal()">✕</button>
+      </div>
+      <div class="video-player-container">
+        <iframe *ngIf="isYoutubeUrl(activeVideo.url)" [src]="getYoutubeEmbedUrl(activeVideo.url) | safeResourceUrl" class="full-player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <video *ngIf="!isYoutubeUrl(activeVideo.url)" class="full-player" controls autoplay playsinline [src]="activeVideo.url | safeUrl"></video>
+      </div>
+    </div>
+  </div>
+
 </div>

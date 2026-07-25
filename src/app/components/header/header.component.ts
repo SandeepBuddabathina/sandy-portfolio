@@ -21,7 +21,7 @@ export class HeaderComponent {
       const y = element.getBoundingClientRect().top + window.scrollY - 72; // Adjust for fixed header
       window.scrollTo({ top: y, behavior: 'smooth' });
     } else {
-      this.router.navigate(['/']).then(() => {
+      this.router.navigate(['/build']).then(() => {
         setTimeout(() => this.scrollToSection(sectionId), 100);
       });
     }

@@ -1,65 +1,436 @@
 <section class="min-h-screen px-4 pb-16 pt-28 bg-gray-50 md:px-6">
-  <button
-    type="button"
-    routerLink="/"
-    class="fixed z-10 inline-flex items-center gap-2 px-4 py-2 font-semibold text-white transition bg-indigo-600 rounded-lg top-24 left-4 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:left-6"
-  >
-    <span aria-hidden="true">&#8592;</span> Back
+  <button type="button" routerLink="/"
+    class="fixed z-10 inline-flex items-center gap-2 px-4 py-2 font-semibold text-white transition bg-indigo-600 rounded-lg top-24 left-4 hover:bg-indigo-700 focus:outline-none md:left-6">
+    &#8592; Back
   </button>
 
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-7xl mx-auto">
     <div class="mb-8 text-center">
-      <p class="font-semibold tracking-widest text-indigo-600 uppercase">Website builder</p>
-      <h1 class="mt-2 text-4xl font-bold text-gray-800 md:text-5xl">Create your website</h1>
-      <p class="mt-3 text-lg text-gray-600">Choose a color theme, edit the content, and download the complete website.</p>
+      <p class="font-semibold tracking-widest text-indigo-600 uppercase">Website Builder</p>
+      <h1 class="mt-2 text-4xl font-bold text-gray-800 md:text-5xl">Create High-Friendly Websites</h1>
+      <p class="mt-3 text-lg text-gray-600">SaaS, OTT Streaming, Video Studio — Complete with Downloadable code.</p>
     </div>
 
-    <div class="grid grid-cols-1 gap-5 mb-8 md:grid-cols-2 xl:grid-cols-4">
-      <button *ngFor="let theme of themes" type="button" (click)="selectTheme(theme)" [class.ring-4]="selectedTheme.id === theme.id" [class.ring-indigo-500]="selectedTheme.id === theme.id" class="overflow-hidden text-left transition bg-white border border-gray-200 shadow-sm rounded-2xl hover:-translate-y-1 hover:shadow-lg focus:outline-none">
-        <div class="theme-preview" [ngClass]="theme.style">
-          <span class="preview-brand">{{ theme.defaults.brand }}</span><span class="preview-menu">Menu</span>
-          <div><small>CREATE MORE</small><strong>{{ theme.defaults.headline }}</strong><em>{{ theme.defaults.buttonText }} →</em></div>
-        </div>
-        <div class="p-4"><h2 class="text-xl font-bold text-gray-800">{{ theme.name }}</h2><p class="mt-1 text-sm text-gray-500">{{ theme.description }}</p></div>
+    <!-- Category Tabs -->
+    <div class="flex flex-wrap justify-center gap-2 mb-8">
+      <button *ngFor="let cat of categories" type="button" (click)="setCategory(cat.id)"
+        [class.bg-indigo-600]="selectedCategory === cat.id" [class.text-white]="selectedCategory === cat.id"
+        [class.shadow-md]="selectedCategory === cat.id" [class.bg-white]="selectedCategory !== cat.id"
+        [class.text-gray-700]="selectedCategory !== cat.id"
+        class="px-4 py-2 text-sm font-semibold transition border border-gray-200 rounded-full focus:outline-none">
+        {{ cat.label }}
       </button>
     </div>
 
+    <!-- Templates Grid -->
+    <div class="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-2 lg:grid-cols-3">
+      <button *ngFor="let theme of filteredThemes" type="button" (click)="selectTheme(theme)"
+        [class.ring-4]="selectedTheme.id === theme.id" [class.ring-indigo-500]="selectedTheme.id === theme.id"
+        class="relative overflow-hidden text-left transition bg-white border border-gray-200 shadow-sm rounded-2xl hover:-translate-y-1 hover:shadow-xl focus:outline-none">
+        <div class="theme-preview" [ngClass]="theme.style">
+          <span class="preview-brand">{{ theme.defaults.brand }}</span>
+          <span class="preview-menu">
+            <span *ngIf="theme.type==='saas'"
+              class="inline-flex items-center px-2 py-0.5 rounded-xl text-[10px] font-bold bg-indigo-600 text-white">SAAS
+              (5 SECTIONS)</span>
+            <span *ngIf="theme.type==='ott'"
+              class="inline-flex items-center px-2 py-0.5 rounded-xl text-[10px] font-extrabold bg-red-600 text-white">OTT
+              (6 ROWS)</span>
+            <span *ngIf="theme.type==='video'"
+              class="inline-flex items-center px-2 py-0.5 rounded-xl text-[10px] font-extrabold bg-purple-600 text-white">VIDEO
+              STUDIO</span>
+          </span>
+          <div>
+            <small>{{ theme.type | uppercase }}</small>
+            <strong>{{ theme.defaults.headline }}</strong>
+            <em>{{ theme.defaults.buttonText }} →</em>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="text-base font-bold text-gray-800 truncate">{{ theme.name }}</h2>
+            <span class="shrink-0 text-xs font-semibold px-2 py-0.5 rounded-md bg-gray-100 text-gray-500 uppercase">{{
+              theme.type }}</span>
+          </div>
+          <p class="mt-1 text-xs text-gray-500 line-clamp-2">{{ theme.description }}</p>
+        </div>
+      </button>
+    </div>
+
+    <!-- Main Workspace -->
     <div class="grid gap-8 p-6 mt-10 bg-white shadow-lg rounded-2xl lg:grid-cols-2 md:p-8">
+
+      <!-- ─── EDIT PANEL ─── -->
       <div>
-        <h2 class="text-2xl font-bold text-gray-800">Edit {{ selectedTheme.name }}</h2>
-        <div class="mt-6 space-y-4">
-          <label class="block text-sm font-semibold text-gray-700">Brand name<input [(ngModel)]="content.brand" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" /></label>
-          <label class="block text-sm font-semibold text-gray-700">Headline<textarea [(ngModel)]="content.headline" rows="2" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"></textarea></label>
-          <label class="block text-sm font-semibold text-gray-700">Description<textarea [(ngModel)]="content.description" rows="3" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"></textarea></label>
-          <label class="block text-sm font-semibold text-gray-700">Button text<input [(ngModel)]="content.buttonText" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" /></label>
-          <div class="grid grid-cols-2 gap-3">
-            <label class="block text-sm font-semibold text-gray-700">Nav link 1<input [(ngModel)]="content.navOne" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" /></label>
-            <label class="block text-sm font-semibold text-gray-700">Nav link 2<input [(ngModel)]="content.navTwo" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" /></label>
+        <div class="flex items-center justify-between pb-4 mb-6 border-b">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-800">Edit: {{ selectedTheme.name }}</h2>
+            <p class="text-xs text-indigo-500 font-bold uppercase tracking-wider mt-0.5">Layout Type: {{
+              selectedTheme.type }}</p>
           </div>
-          <label class="block text-sm font-semibold text-gray-700">Section title<textarea [(ngModel)]="content.sectionTitle" rows="2" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"></textarea></label>
-          <label class="block text-sm font-semibold text-gray-700">Section description<textarea [(ngModel)]="content.sectionDescription" rows="2" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"></textarea></label>
-          <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <label class="block text-sm font-semibold text-gray-700">Feature 1<input [(ngModel)]="content.featureOne" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" /></label>
-            <label class="block text-sm font-semibold text-gray-700">Feature 2<input [(ngModel)]="content.featureTwo" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" /></label>
-            <label class="block text-sm font-semibold text-gray-700">Feature 3<input [(ngModel)]="content.featureThree" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" /></label>
-          </div>
-          <label class="block text-sm font-semibold text-gray-700">Customer quote<textarea [(ngModel)]="content.testimonial" rows="2" class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"></textarea></label>
-          <div class="grid gap-3 sm:grid-cols-2">
-            <button type="button" (click)="openFullPreview()" class="px-5 py-3 font-bold text-white transition bg-gray-900 rounded-lg hover:bg-black">Visit site </button>
-            <button type="button" (click)="downloadTheme()" class="px-5 py-3 font-bold text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700">Download Page</button>
+          <span class="px-3 py-1 text-xs font-extrabold text-white bg-indigo-600 rounded-full uppercase">{{
+            selectedTheme.type }}</span>
+        </div>
+
+        <div class="space-y-4 max-h-[700px] overflow-y-auto pr-2">
+          <!-- SAAS EDIT FIELDS (5 SECTIONS + ACCENT COLOR PICKER) -->
+          <ng-container *ngIf="selectedTheme.type === 'saas'">
+            <div class="p-4 bg-indigo-50/60 rounded-xl border border-indigo-100 space-y-3">
+              <h3 class="text-xs font-bold text-indigo-900 uppercase tracking-wider">SECTION 1: HERO, BRAND & COLOR
+                THEME</h3>
+              <div class="grid grid-cols-3 gap-2">
+                <div class="space-y-1">
+                  <label class="block text-[11px] font-bold text-gray-700">Brand Name</label>
+                  <input [(ngModel)]="content.brand" class="input-field" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[11px] font-bold text-gray-700">Badge Text</label>
+                  <input [(ngModel)]="content.badgeText" class="input-field" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[11px] font-bold text-gray-700">Accent Color</label>
+                  <input type="color" [(ngModel)]="content.accentColor"
+                    class="h-9 w-full rounded-lg border cursor-pointer p-0.5 bg-white" />
+                </div>
+              </div>
+              <div class="space-y-1">
+                <label class="block text-[11px] font-bold text-gray-700">Headline</label>
+                <textarea [(ngModel)]="content.headline" rows="2" class="input-field"></textarea>
+              </div>
+              <div class="space-y-1">
+                <label class="block text-[11px] font-bold text-gray-700">Description</label>
+                <textarea [(ngModel)]="content.description" rows="2" class="input-field"></textarea>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="space-y-1">
+                  <label class="block text-[11px] font-bold text-gray-700">Media Type</label>
+                  <select [(ngModel)]="content.mediaType" class="input-field">
+                    <option value="image">Dashboard Image</option>
+                    <option value="video">Video (YouTube / MP4)</option>
+                  </select>
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[11px] font-bold text-gray-700">Media URL</label>
+                  <input [(ngModel)]="content.mediaUrl" class="input-field" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 2: Stat Metrics -->
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+              <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">SECTION 2: METRICS & STATS</h3>
+              <div class="grid grid-cols-3 gap-2">
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Metric 1 Val</label>
+                  <input [(ngModel)]="content.metric1Val" class="input-field text-xs" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Metric 2 Val</label>
+                  <input [(ngModel)]="content.metric2Val" class="input-field text-xs" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Metric 3 Val</label>
+                  <input [(ngModel)]="content.metric3Val" class="input-field text-xs" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: Feature Cards -->
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+              <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">SECTION 3: CORE FEATURES (4 CARDS)
+              </h3>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Feature 1 Title</label>
+                  <input [(ngModel)]="content.featureOneTitle" class="input-field text-xs" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Feature 2 Title</label>
+                  <input [(ngModel)]="content.featureTwoTitle" class="input-field text-xs" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Feature 3 Title</label>
+                  <input [(ngModel)]="content.featureThreeTitle" class="input-field text-xs" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Feature 4 Title</label>
+                  <input [(ngModel)]="content.featureFourTitle" class="input-field text-xs" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 4: Pricing Plans -->
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+              <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">SECTION 4: PRICING TIERS</h3>
+              <div class="grid grid-cols-3 gap-2">
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Starter Price</label>
+                  <input [(ngModel)]="content.starterPrice" class="input-field text-xs" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Pro Price</label>
+                  <input [(ngModel)]="content.proPrice" class="input-field text-xs" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[10px] font-bold text-gray-600">Enterprise Price</label>
+                  <input [(ngModel)]="content.enterprisePrice" class="input-field text-xs" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 5: Testimonial -->
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+              <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">SECTION 5: TESTIMONIAL & CTA</h3>
+              <div class="space-y-1">
+                <label class="block text-[10px] font-bold text-gray-600">Quote</label>
+                <input [(ngModel)]="content.testimonialQuote" class="input-field text-xs" />
+              </div>
+              <div class="space-y-1">
+                <label class="block text-[10px] font-bold text-gray-600">Author</label>
+                <input [(ngModel)]="content.testimonialAuthor" class="input-field text-xs" />
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- OTT EDIT FIELDS -->
+          <ng-container *ngIf="selectedTheme.type === 'ott'">
+            <div class="grid grid-cols-2 gap-2">
+              <div class="space-y-1">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Platform Name</label>
+                <input [(ngModel)]="content.brand" class="input-field" />
+              </div>
+              <div class="space-y-1">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Accent Color</label>
+                <input type="color" [(ngModel)]="content.accentColor"
+                  class="h-9 w-full rounded-lg border cursor-pointer p-0.5 bg-white" />
+              </div>
+            </div>
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Headline</label>
+              <textarea [(ngModel)]="content.headline" rows="2" class="input-field"></textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Genre Tag</label>
+                <input [(ngModel)]="content.genreTag" class="input-field" />
+              </div>
+              <div class="space-y-1">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Subscription Price</label>
+                <input [(ngModel)]="content.subscriptionPrice" class="input-field" />
+              </div>
+            </div>
+
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
+              <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Hero Main Video</h3>
+              <input [(ngModel)]="content.mediaUrl" placeholder="https://www.youtube.com/watch?v=... or .mp4"
+                class="input-field text-xs" />
+            </div>
+
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+              <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Movie Trailers Grid</h3>
+              <div class="space-y-2">
+                <input [(ngModel)]="content.movie1Title" placeholder="Movie 1 Title" class="input-field text-xs" />
+                <input [(ngModel)]="content.movie1Url" placeholder="Movie 1 URL" class="input-field text-xs" />
+                <input [(ngModel)]="content.movie2Title" placeholder="Movie 2 Title" class="input-field text-xs" />
+                <input [(ngModel)]="content.movie2Url" placeholder="Movie 2 URL" class="input-field text-xs" />
+                <input [(ngModel)]="content.movie3Title" placeholder="Movie 3 Title" class="input-field text-xs" />
+                <input [(ngModel)]="content.movie3Url" placeholder="Movie 3 URL" class="input-field text-xs" />
+              </div>
+            </div>
+
+            <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold text-indigo-900 uppercase tracking-wider">Add Custom Videos</h3>
+                <button type="button" (click)="addExtraVideo()"
+                  class="px-3 py-1.5 text-xs font-bold bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">+
+                  Add Video</button>
+              </div>
+              <div *ngFor="let v of content.extraVideos; let i = index"
+                class="p-2 bg-white rounded-lg border flex items-center gap-2">
+                <div class="flex-1 space-y-1">
+                  <input [(ngModel)]="v.title" placeholder="Video Title"
+                    class="w-full px-2 py-1 text-xs border rounded" />
+                  <input [(ngModel)]="v.url" placeholder="YouTube or MP4 URL"
+                    class="w-full px-2 py-1 text-xs border rounded" />
+                </div>
+                <button type="button" (click)="removeExtraVideo(i)"
+                  class="text-red-500 text-xs font-bold px-2 py-2 hover:bg-red-50 rounded">✕</button>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- VIDEO STUDIO EDIT -->
+          <ng-container *ngIf="selectedTheme.type === 'video'">
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-gray-700 uppercase">Studio Name</label>
+              <input [(ngModel)]="content.brand" class="input-field" />
+            </div>
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-gray-700 uppercase">Headline</label>
+              <textarea [(ngModel)]="content.headline" rows="2" class="input-field"></textarea>
+            </div>
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-gray-700 uppercase">Showreel Video URL</label>
+              <input [(ngModel)]="content.mediaUrl" class="input-field" />
+            </div>
+          </ng-container>
+
+          <div class="grid gap-3 sm:grid-cols-2 pt-4">
+            <button type="button" (click)="openFullPreview()"
+              class="px-5 py-3 font-bold text-white bg-gray-900 rounded-lg hover:bg-black transition">Visit Full
+              Site</button>
+            <button type="button" (click)="downloadTheme()"
+              class="px-5 py-3 font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition">Download
+              ZIP (with JS)</button>
           </div>
         </div>
       </div>
+
+      <!-- ─── LIVE PREVIEW ─── -->
       <div class="preview-frame">
-      <div class="preview-window" [ngClass]="selectedTheme.style">
-        <nav><b>{{ content.brand }}</b><span>{{ content.navTwo }}</span></nav>
-        <div class="preview-copy"><small>MAKE YOUR MARK</small><h3>{{ content.headline }}</h3><p>{{ content.description }}</p><button>{{ content.buttonText }} →</button></div>
-        <section class="mini-intro"><small>BUILT FOR MOMENTUM</small><h4>{{ content.sectionTitle }}</h4><p>{{ content.sectionDescription }}</p></section>
-        <section class="mini-features"><article><b>01</b><h5>{{ content.featureOne }}</h5><p>One focused place for the work that matters.</p></article><article><b>02</b><h5>{{ content.featureTwo }}</h5><p>Move from idea to outcome with clarity.</p></article><article><b>03</b><h5>{{ content.featureThree }}</h5><p>Make every next step feel simple.</p></article></section>
-        <section class="mini-quote">“{{ content.testimonial }}”<small>— A happy customer</small></section>
-        <footer>Created by Sandeep B.</footer>
+        <div class="preview-window" [ngClass]="selectedTheme.style" [style.--accent]="content.accentColor || '#6366f1'">
+
+          <!-- SaaS Live Preview -->
+          <div *ngIf="selectedTheme.type === 'saas'"
+            class="h-full overflow-y-auto space-y-6 pb-6 text-white bg-gray-950 p-4 rounded-xl">
+            <!-- Hero -->
+            <div class="text-center space-y-3 pt-2">
+              <span
+                class="inline-block px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-extrabold rounded-full"
+                [style.color]="content.accentColor">{{ content.badgeText }}</span>
+              <h3 class="text-xl font-black text-white leading-tight max-w-sm mx-auto">{{ content.headline }}</h3>
+              <p class="text-xs text-gray-400 max-w-xs mx-auto">{{ content.description }}</p>
+              <button class="px-4 py-2 text-white text-xs font-bold rounded-full shadow-lg"
+                [style.background]="content.accentColor || '#6366f1'"
+                (click)="handleButtonClick('Preview Trial Button')">{{ content.buttonText }}</button>
+            </div>
+
+            <!-- Hero Mockup -->
+            <div class="aspect-video w-full relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
+              <ng-container *ngIf="content.mediaUrl">
+                <iframe *ngIf="isYoutubeUrl(content.mediaUrl)"
+                  [src]="getYoutubeEmbedUrl(content.mediaUrl) | safeResourceUrl" class="absolute inset-0 w-full h-full"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+                <img *ngIf="!isYoutubeUrl(content.mediaUrl) && content.mediaType === 'image'"
+                  [src]="content.mediaUrl | safeUrl" class="absolute inset-0 w-full h-full object-cover" />
+                <video *ngIf="!isYoutubeUrl(content.mediaUrl) && content.mediaType === 'video'"
+                  class="absolute inset-0 w-full h-full object-cover" controls playsinline
+                  [src]="content.mediaUrl | safeUrl"></video>
+              </ng-container>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-2 text-center p-3 bg-gray-900/60 rounded-xl border border-gray-800">
+              <div><b class="text-sm block font-black" [style.color]="content.accentColor || '#818cf8'">{{
+                  content.metric1Val }}</b><span class="text-[9px] text-gray-400">{{ content.metric1Label }}</span>
+              </div>
+              <div><b class="text-sm block font-black" [style.color]="content.accentColor || '#818cf8'">{{
+                  content.metric2Val }}</b><span class="text-[9px] text-gray-400">{{ content.metric2Label }}</span>
+              </div>
+              <div><b class="text-sm block font-black" [style.color]="content.accentColor || '#818cf8'">{{
+                  content.metric3Val }}</b><span class="text-[9px] text-gray-400">{{ content.metric3Label }}</span>
+              </div>
+            </div>
+
+            <!-- Features -->
+            <div class="space-y-2">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Core Capabilities</h4>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div
+                  class="p-2.5 bg-gray-900 border border-gray-800 rounded-lg cursor-pointer hover:border-indigo-500 transition"
+                  (click)="handleButtonClick(content.featureOneTitle)"><b class="text-white block truncate mb-1"
+                    [style.color]="content.accentColor">01 {{ content.featureOneTitle }}</b>
+                  <p class="text-[10px] text-gray-400 line-clamp-2">{{ content.featureOneDesc }}</p>
+                </div>
+                <div
+                  class="p-2.5 bg-gray-900 border border-gray-800 rounded-lg cursor-pointer hover:border-indigo-500 transition"
+                  (click)="handleButtonClick(content.featureTwoTitle)"><b class="text-white block truncate mb-1"
+                    [style.color]="content.accentColor">02 {{ content.featureTwoTitle }}</b>
+                  <p class="text-[10px] text-gray-400 line-clamp-2">{{ content.featureTwoDesc }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="space-y-2">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Pricing Plans</h4>
+              <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="p-2 bg-gray-900 border rounded-lg cursor-pointer"
+                  (click)="handleButtonClick('Starter Plan')"><b>Starter</b><span class="block font-extrabold my-1"
+                    [style.color]="content.accentColor">{{ content.starterPrice }}</span></div>
+                <div class="p-2 bg-gray-900 border rounded-lg cursor-pointer" [style.borderColor]="content.accentColor"
+                  (click)="handleButtonClick('Pro Plan')"><b>Pro</b><span class="block font-extrabold my-1"
+                    [style.color]="content.accentColor">{{ content.proPrice }}</span></div>
+                <div class="p-2 bg-gray-900 border rounded-lg cursor-pointer"
+                  (click)="handleButtonClick('Enterprise Plan')"><b>Enterprise</b><span
+                    class="block font-extrabold my-1" [style.color]="content.accentColor">{{ content.enterprisePrice
+                    }}</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OTT Preview -->
+          <div *ngIf="selectedTheme.type === 'ott'" class="h-full overflow-y-auto space-y-4 pb-6">
+            <div class="flex items-center justify-between px-3 py-2 bg-black bg-opacity-80 text-sm font-bold">
+              <span class="font-black text-lg" [style.color]="content.accentColor || '#e11d48'">{{ content.brand
+                }}</span>
+              <span class="px-2 py-0.5 text-white text-xs rounded-full"
+                [style.background]="content.accentColor || '#e11d48'">{{ content.subscriptionPrice }}</span>
+            </div>
+            <div class="relative bg-black rounded-xl overflow-hidden aspect-video w-full">
+              <ng-container *ngIf="content.mediaUrl">
+                <iframe *ngIf="isYoutubeUrl(content.mediaUrl)"
+                  [src]="getYoutubeEmbedUrl(content.mediaUrl) | safeResourceUrl" class="absolute inset-0 w-full h-full"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+                <video *ngIf="!isYoutubeUrl(content.mediaUrl)" class="absolute inset-0 w-full h-full object-cover"
+                  controls playsinline [src]="content.mediaUrl | safeUrl"></video>
+              </ng-container>
+            </div>
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 p-1">
+              <div
+                *ngFor="let mv of [{t: content.movie1Title, u: content.movie1Url}, {t: content.movie2Title, u: content.movie2Url}, {t: content.movie3Title, u: content.movie3Url}]"
+                class="bg-gray-900 rounded-xl overflow-hidden cursor-pointer" (click)="handleButtonClick(mv.t)">
+                <div class="aspect-video w-full relative bg-black">
+                  <ng-container *ngIf="mv.u">
+                    <iframe *ngIf="isYoutubeUrl(mv.u)" [src]="getYoutubeEmbedUrl(mv.u) | safeResourceUrl"
+                      class="absolute inset-0 w-full h-full" frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+                    <video *ngIf="!isYoutubeUrl(mv.u)" class="absolute inset-0 w-full h-full object-cover" controls
+                      playsinline [src]="mv.u | safeUrl"></video>
+                  </ng-container>
+                </div>
+                <p class="text-white text-xs font-bold p-2 truncate">{{ mv.t }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Studio Preview -->
+          <div *ngIf="selectedTheme.type === 'video'" class="h-full overflow-y-auto space-y-4">
+            <div class="flex items-center justify-between px-3 py-2 text-sm font-bold bg-black bg-opacity-60">
+              <span class="font-black" [style.color]="content.accentColor || '#f97316'">{{ content.brand }}</span>
+              <span class="text-xs text-gray-400">{{ content.awardsCount }}</span>
+            </div>
+            <div class="relative bg-black rounded-xl overflow-hidden aspect-video w-full">
+              <ng-container *ngIf="content.mediaUrl">
+                <iframe *ngIf="isYoutubeUrl(content.mediaUrl)"
+                  [src]="getYoutubeEmbedUrl(content.mediaUrl) | safeResourceUrl" class="absolute inset-0 w-full h-full"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+                <video *ngIf="!isYoutubeUrl(content.mediaUrl)" class="absolute inset-0 w-full h-full object-cover"
+                  controls playsinline [src]="content.mediaUrl | safeUrl"></video>
+              </ng-container>
+            </div>
+          </div>
+
+        </div>
       </div>
-      </div>
+
     </div>
   </div>
 </section>
